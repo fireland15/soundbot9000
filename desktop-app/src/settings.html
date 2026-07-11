@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Soundboard Overlay Settings</title>
+  <style>
+    body {
+      font-family: -apple-system, "Segoe UI", sans-serif;
+      background: #1e1f24;
+      color: #eee;
+      margin: 0;
+      padding: 16px 20px;
+    }
+    h2 { font-size: 15px; margin: 18px 0 8px; }
+    h2:first-child { margin-top: 0; }
+    label { display: block; font-size: 12px; opacity: 0.75; margin-top: 10px; }
+    input[type=text] {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 6px 8px;
+      margin-top: 4px;
+      background: #2b2d34;
+      border: 1px solid #40424c;
+      border-radius: 6px;
+      color: #eee;
+      font-size: 13px;
+    }
+    .hint { font-size: 11px; opacity: 0.5; margin-top: 3px; }
+    .row { display: flex; gap: 10px; }
+    .row > div { flex: 1; }
+    button {
+      background: #5865f2;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 8px 14px;
+      font-size: 13px;
+      cursor: pointer;
+      margin-top: 14px;
+    }
+    button.secondary {
+      background: #40424c;
+    }
+    #status {
+      font-size: 12px;
+      margin-top: 10px;
+      min-height: 16px;
+    }
+    #sounds-list {
+      margin-top: 6px;
+      max-height: 260px;
+      overflow-y: auto;
+      border: 1px solid #33353d;
+      border-radius: 6px;
+    }
+    .sound-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 6px 10px;
+      border-bottom: 1px solid #2b2d34;
+      font-size: 13px;
+    }
+    .sound-row:last-child { border-bottom: none; }
+    .hotkey-capture {
+      background: #2b2d34;
+      border: 1px solid #40424c;
+      border-radius: 5px;
+      padding: 4px 8px;
+      font-size: 12px;
+      min-width: 160px;
+      text-align: center;
+      cursor: pointer;
+    }
+    .hotkey-capture.capturing {
+      border-color: #5865f2;
+      color: #a3adff;
+    }
+    .clear-btn {
+      background: transparent;
+      color: #f04747;
+      border: none;
+      font-size: 11px;
+      margin-left: 6px;
+      cursor: pointer;
+      padding: 0;
+    }
+  </style>
+</head>
+<body>
+  <h2>Connection</h2>
+  <label>Bot API URL <span class="hint">(matches API_HOST/API_PORT in the bot's .env)</span></label>
+  <input type="text" id="apiUrl" placeholder="http://127.0.0.1:3939" />
+
+  <label>API key <span class="hint">(matches API_KEY in the bot's .env)</span></label>
+  <input type="text" id="apiKey" />
+
+  <div class="row">
+    <div>
+      <label>Guild ID <span class="hint">(optional, overrides bot's default)</span></label>
+      <input type="text" id="guildId" />
+    </div>
+    <div>
+      <label>Voice channel ID <span class="hint">(optional, overrides bot's default)</span></label>
+      <input type="text" id="channelId" />
+    </div>
+  </div>
+
+  <button id="save-connection">Save connection</button>
+  <button class="secondary" id="test-connection">Test connection</button>
+  <div id="status"></div>
+
+  <h2>Overlay hotkeys</h2>
+  <label>Show/hide overlay</label>
+  <div class="hotkey-capture" data-target="toggleOverlayHotkey">click to set</div>
+
+  <label>Lock/unlock overlay (locked = click-through so it doesn't block your game)</label>
+  <div class="hotkey-capture" data-target="toggleLockHotkey">click to set</div>
+
+  <h2>Sound hotkeys</h2>
+  <div id="sounds-list"></div>
+
+  <script src="settings.js"></script>
+</body>
+</html>

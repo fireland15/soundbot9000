@@ -1,0 +1,7 @@
+node_modules/
+.env
+sounds/*
+!sounds/.gitkeep
+dist/
+desktop-app/dist/
+*.log

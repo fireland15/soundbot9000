@@ -1,0 +1,28 @@
+{
+  "name": "soundboard-overlay",
+  "version": "1.0.0",
+  "description": "Windows overlay + global hotkeys to trigger your Discord soundboard bot while gaming",
+  "main": "src/main.js",
+  "scripts": {
+    "start": "electron .",
+    "dist": "electron-builder --win"
+  },
+  "dependencies": {
+    "electron-store": "^8.2.0"
+  },
+  "devDependencies": {
+    "electron": "^43.1.0",
+    "electron-builder": "^26.15.3"
+  },
+  "build": {
+    "appId": "com.soundboard.overlay",
+    "productName": "Soundboard Overlay",
+    "win": {
+      "target": "nsis"
+    },
+    "files": [
+      "src/**/*",
+      "assets/**/*"
+    ]
+  }
+}
