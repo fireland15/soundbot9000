@@ -64,6 +64,39 @@ immediately — no restart needed.
 - If you switch to global commands (no `GUILD_ID` set), it can take up to an hour for Discord to propagate them to all servers.
 - The bot needs `Connect` and `Speak` permissions in whatever voice channel you want it to join.
 
+## Running with Docker
+
+Build the image:
+
+```bash
+docker build -t soundbot9000 .
+```
+
+Run it, mounting `sounds/` so your clips persist outside the container and
+survive rebuilds:
+
+```bash
+docker run -d \
+  --name soundbot9000 \
+  --env-file .env \
+  -p 3939:3939 \
+  -v "$(pwd)/sounds:/app/sounds" \
+  soundbot9000
+```
+
+- `--env-file .env` passes `DISCORD_TOKEN`, `CLIENT_ID`, `GUILD_ID`, and the
+  `API_*`/`VOICE_CHANNEL_ID` vars from the [desktop overlay setup](#desktop-overlay--hotkeys-windows) below.
+- `-p 3939:3939` only matters if you're using the control API from the
+  desktop app — drop it if you're not.
+- Command deployment (`npm run deploy-commands`) still needs to be run once,
+  either from your host machine or inside the container:
+  ```bash
+  docker run --rm --env-file .env soundbot9000 node src/deploy-commands.js
+  ```
+
+The image runs as a non-root user and doesn't require system `ffmpeg` —
+`ffmpeg-static` bundles a static binary via npm.
+
 ## Desktop overlay + hotkeys (Windows)
 
 There's a companion Windows app in [`desktop-app/`](desktop-app) that gives you
